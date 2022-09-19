@@ -7,10 +7,12 @@ import (
 	"context"
 	"test-go-graphql/graph/generated"
 	"test-go-graphql/graph/model"
+	"test-go-graphql/utils"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
+
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
@@ -33,7 +35,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) 
 
 // Update user
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	_, err := GetUserByID(input.ID)
+	_, err := utils.GetUserByID(input.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -48,13 +50,13 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UserInput
 		return nil, err
 	}
 
-	newUser, _ := GetUserByID(input.ID)
+	newUser, _ := utils.GetUserByID(input.ID)
 	return newUser, nil
 }
 
 // Update user
 func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*model.User, error) {
-	user, err := GetUserByID(id)
+	user, err := utils.GetUserByID(id)
 	if err != nil {
 		return nil, err
 	}
