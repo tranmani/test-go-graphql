@@ -25,7 +25,48 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) 
 	}
 
 	user := &model.User{
-		Name:   input.Name,
+		Name: input.Name,
+	}
+
+	return user, nil
+}
+
+// Update user
+func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
+	_, err := GetUserByID(input.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := gorm.Open(sqlite.Open("../test.db"), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Table("test").Updates(&input).Error
+	if err != nil {
+		return nil, err
+	}
+
+	newUser, _ := GetUserByID(input.ID)
+	return newUser, nil
+}
+
+// Update user
+func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*model.User, error) {
+	user, err := GetUserByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := gorm.Open(sqlite.Open("../test.db"), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Table("test").Delete(&user).Error
+	if err != nil {
+		return nil, err
 	}
 
 	return user, nil

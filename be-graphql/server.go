@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"os"
+	"fmt"
 	"test-go-graphql/graph"
 	"test-go-graphql/graph/generated"
 
@@ -38,4 +39,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Server is running")
 }

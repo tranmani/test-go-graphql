@@ -10,3 +10,8 @@ type User struct {
 	ID   *string `json:"id"`
 	Name *string `json:"name"`
 }
+
+type UserInput struct {
+	ID   string  `json:"id"`
+	Name *string `json:"name"`
+}
