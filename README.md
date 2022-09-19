@@ -5,7 +5,7 @@
 Run the bellow commands in the terminal from the project directory:
 
 ```
-cd go-graphql
+cd be-graphql
 go mod download
 go run server.go
 ```
